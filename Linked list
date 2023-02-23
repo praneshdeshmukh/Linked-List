@@ -1,0 +1,90 @@
+#include <iostream>
+#include<map>
+using namespace std;
+
+class Node{
+    
+    public:
+    int data;
+    Node *next;
+    
+    //constructor
+    Node(int data){
+        this->data=data;
+        this->next=NULL;
+    }
+};
+void insertAthead(Node* &head, int d){
+    
+    Node* temp = new Node(d);
+    
+    temp->next=head;
+    head=temp;
+    
+}
+void insertAtEnd(Node* &tail, int d){
+    
+    Node* temp = new Node(d);
+    
+    // Node* ptr;
+    // ptr=tail;
+    
+    // while(ptr->next!=NULL){
+        
+    //     ptr=ptr->next;
+    // }
+    
+    // temp->next=ptr->next;
+    // ptr->next=temp;
+    // tail=temp;
+    //or you can use -
+    
+    tail -> next = temp;
+    tail  = temp;
+
+}
+void print(Node* head){
+    
+    if(head==NULL)
+    {
+    cout << "list is empty" << endl;   
+    return;
+    }
+    
+    Node* ptr;
+    ptr=head;
+    while(ptr!=NULL)
+    {
+        cout << ptr->data << " ";
+        ptr=ptr->next;
+    }
+    cout << endl;
+}
+int main()
+{
+    Node* node1=new Node(10);
+    
+    
+    Node* head = node1;
+    Node* tail = node1;
+    
+    insertAthead(head,70);
+    insertAthead(head,20);
+    insertAthead(head,30);
+    insertAthead(head,89);
+    insertAthead(head,12);
+    
+    print(head);
+    // 12 89 30 20 70 10
+    
+    insertAtEnd(tail,70);
+    insertAtEnd(tail,20);
+    insertAtEnd(tail,30);
+    insertAtEnd(tail,89);
+    insertAtEnd(tail,12);
+    
+    print(head);
+    //12 89 30 20 70 10 70 20 30 89 12
+    
+    return 0;
+}
