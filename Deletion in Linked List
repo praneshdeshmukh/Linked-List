@@ -1,0 +1,161 @@
+#include <iostream>
+#include<map>
+using namespace std;
+
+class Node{
+    
+    public:
+    int data;
+    Node *next;
+    
+    //constructor
+    Node(int data){
+        this->data=data;
+        this->next=NULL;
+    }
+    
+    //destructor
+    ~Node(){
+        int value = this->data;
+        
+        if(this->next != NULL){
+            delete next;
+            this->next = NULL;
+        }
+        cout << "memory is deleted for :" << value << endl;
+    }
+};
+void insertAthead(Node* &head, int d){
+    
+    Node* temp = new Node(d);
+    
+    temp->next=head;
+    head=temp;
+    
+}
+void insertAtEnd(Node* &tail, int d){
+    
+    Node* temp = new Node(d);
+    
+    tail -> next = temp;
+    tail  = temp;
+    
+}
+void insertAtPos(Node* &tail, Node* &head, int position, int d){
+    
+    Node* temp = new Node(d);
+    
+    //for first position
+    if(position == 1){
+        
+        insertAthead(head,d);
+        return;
+        
+    }
+    
+    //for middle position
+    Node* ptr;
+    ptr=head;
+    int cnt=1;
+    
+    while(cnt < position-1){
+        
+        ptr = ptr->next;
+        cnt++;
+        
+    }
+    //for last position
+    if(ptr->next == NULL){
+        
+        insertAtEnd(tail,d);
+        return;
+        
+    }
+    temp->next = ptr->next;
+    ptr->next = temp;
+
+}
+
+void print(Node* head){
+    
+    if(head==NULL)
+    {
+    cout << "list is empty" << endl;   
+    return;
+    }
+    
+    Node* ptr;
+    ptr=head;
+    while(ptr!=NULL)
+    {
+        cout << ptr->data << " ";
+        ptr=ptr->next;
+    }
+    cout << endl;
+}
+
+void deleteNode(Node* &head, int position){
+    
+    
+    if(position == 1){
+        
+        Node* ptr;
+        ptr = head;
+        head = head->next ;
+        ptr->next = NULL;
+        delete ptr;
+        
+    }
+    else{
+    Node*prev=NULL;
+    Node* curr;
+    curr = head;
+    int cnt = 1;
+    while(cnt < position){
+        
+        prev=curr;
+        curr = curr->next;
+        cnt++;
+        
+    }
+    prev->next = curr-> next;
+    curr->next = NULL;
+    delete curr;
+    }
+}
+
+
+int main()
+{
+    Node* node1=new Node(10);
+    
+    
+    Node* head = node1;
+    Node* tail = node1;
+    
+    insertAtEnd(tail,20);
+    insertAtEnd(tail,40);
+    
+    print(head);
+    //10 20 40
+    cout << "head is :" << head->data << endl; //10
+    cout << "tail is :" << tail->data << endl; //40
+    
+    //at POSITION
+    insertAtPos(tail,head,3,30);
+    print(head);
+    //10 20 30 40
+      
+    cout << "head is :" << head->data << endl; //10
+    cout << "tail is :" << tail->data << endl; //40
+    
+    deleteNode(head,1);
+    print(head);
+    //20 30 40
+    
+    deleteNode(head,3);
+    print(head);
+    //20 30
+    
+    return 0;
+}
