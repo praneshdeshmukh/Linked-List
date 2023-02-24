@@ -43,6 +43,43 @@ void insertAtEnd(Node* &tail, int d){
     tail  = temp;
 
 }
+void insertAtPos(Node* &tail, Node* &head, int position, int d){
+    
+    Node* temp = new Node(d);
+    
+    //for first position
+    if(position == 1){
+        
+        insertAthead(head,d);
+        return;
+        
+    }
+    
+    //for middle position
+    Node* ptr;
+    ptr=head;
+    int cnt=1;
+    
+    while(cnt < position-1){
+        
+        ptr = ptr->next;
+        cnt++;
+        
+    }
+    //for last position
+    if(ptr->next == NULL){
+        
+        insertAtEnd(tail,d);
+        return;
+        
+    }
+    
+    
+    temp->next = ptr->next;
+    ptr->next = temp;
+
+}
+
 void print(Node* head){
     
     if(head==NULL)
@@ -62,29 +99,40 @@ void print(Node* head){
 }
 int main()
 {
-    Node* node1=new Node(10);
+    Node* node1=new Node(20);
     
     
     Node* head = node1;
     Node* tail = node1;
     
+    //at START
     insertAthead(head,70);
-    insertAthead(head,20);
-    insertAthead(head,30);
-    insertAthead(head,89);
-    insertAthead(head,12);
+    //insertAthead(head,20);
+    //insertAthead(head,30);
+    //insertAthead(head,89);
+    //insertAthead(head,12);
     
-    print(head);
-    // 12 89 30 20 70 10
-    
-    insertAtEnd(tail,70);
-    insertAtEnd(tail,20);
-    insertAtEnd(tail,30);
+    //print(head);
+   
+    //at END
+    //insertAtEnd(tail,70);
+    //insertAtEnd(tail,20);
+    //insertAtEnd(tail,30);
     insertAtEnd(tail,89);
     insertAtEnd(tail,12);
     
     print(head);
-    //12 89 30 20 70 10 70 20 30 89 12
+    //70 20 89 12
+    cout << "head is :" << head->data << endl;
+    cout << "tail is :" << tail->data << endl;
+    
+    //at POSITION
+    insertAtPos(tail,head,5,30);
+    print(head);
+    //70 20 89 12 30  
+      
+    cout << "head is :" << head->data << endl;
+    cout << "tail is :" << tail->data << endl;
     
     return 0;
 }
