@@ -1,0 +1,158 @@
+#include <iostream>
+using namespace std;
+
+class Node
+{
+
+public:
+    Node *prev;
+    int data;
+    Node *next;
+
+    // constructor
+    Node(int data)
+    {
+        this->prev = NULL;
+        this->data = data;
+        this->next = NULL;
+    }
+};
+
+void insertAtBegin(Node *&tail, Node *&head, int d)
+{
+
+    Node *temp = new Node(d);
+
+    if (head == NULL)
+    {
+        head = temp;
+        tail = temp;
+        return;
+    }
+    else
+    {
+        temp->next = head;
+        head->prev = temp;
+        head = temp;
+    }
+}
+
+void insertAtEnd(Node *&head, Node *&tail, int d)
+{
+
+    Node *temp = new Node(d);
+
+    if (tail == NULL)
+    {
+        tail = temp;
+        head = temp;
+        return;
+    }
+    Node *ptr = tail;
+    while (ptr->next != NULL)
+    {
+
+        ptr = ptr->next;
+    }
+    ptr->next = temp;
+    temp->prev = ptr;
+
+    tail = temp;
+}
+void insertAtPosition(Node *&tail, Node *&head, int position, int d)
+{
+
+    Node *temp = new Node(d);
+    int count = 1;
+
+    if (position == 1)
+    {
+
+        insertAtBegin(tail, head, d);
+        return;
+    }
+    else
+    {
+
+        Node *ptr = head;
+
+        while (count < position - 1)
+        {
+
+            count++;
+            ptr = ptr->next;
+            tail = ptr;
+        }
+        if (ptr->next == NULL)
+        {
+            insertAtEnd(head, tail, d);
+            return;
+        }
+        temp->next = ptr->next;
+        ptr->next->prev = temp;
+        ptr->next = temp;
+        temp->prev = ptr;
+    }
+}
+int lenghtOfList(Node *&head)
+{
+
+    int length = 1;
+    Node *ptr = head;
+    while (ptr->next != NULL)
+    {
+
+        length++;
+        ptr = ptr->next;
+    }
+    return length;
+}
+void print(Node *&head)
+{
+
+    Node *ptr;
+    ptr = head;
+    while (ptr != NULL)
+    {
+
+        cout << ptr->data << " ";
+        ptr = ptr->next;
+    }
+    cout << endl;
+}
+int main()
+{
+
+    // Node* node1 = new Node(10);
+    int result;
+    Node *head = NULL;
+    Node *tail = NULL;
+
+    // cout << "head :" << head-> data << endl;
+    // cout << "tail :" << tail->data << endl;
+
+    insertAtBegin(tail, head, 5);
+    print(head);
+    insertAtBegin(tail, head, 3);
+    print(head);
+
+    insertAtEnd(head, tail, 15);
+    insertAtEnd(head, tail, 20);
+    insertAtEnd(head, tail, 25);
+    print(head);
+
+    cout << "head :" << head->data << endl;
+    cout << "tail :" << tail->data << endl;
+
+    insertAtPosition(tail, head, 1, 2);
+    print(head);
+    insertAtPosition(tail, head, 6, 28);
+    print(head);
+    cout << "head :" << head->data << endl;
+    cout << "tail :" << tail->data << endl;
+
+    result = lenghtOfList(head);
+    cout << "Length of Linked List is :" << result << endl;
+    
+    return 0;
+}
